@@ -7,9 +7,9 @@ public class MapsIdTeamMemberId implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    private Integer mapsIdRoster;
+    private Integer mapsIdPlayer;
 
-    private Integer playerId;
+    private Integer mapsIdRoster;
 
     public MapsIdTeamMemberId()
     {
@@ -22,18 +22,18 @@ public class MapsIdTeamMemberId implements Serializable
 
     public MapsIdTeamMemberId(Integer playerId, Integer rosterId)
     {
+        this.mapsIdPlayer = Objects.requireNonNull(playerId);
         this.mapsIdRoster = Objects.requireNonNull(rosterId);
-        this.playerId = Objects.requireNonNull(playerId);
     }
 
     public Integer getPlayerId()
     {
-        return playerId;
+        return mapsIdPlayer;
     }
 
     public void setPlayerId(Integer playerId)
     {
-        this.playerId = playerId;
+        this.mapsIdPlayer = playerId;
     }
 
     public Integer getRosterId()
@@ -51,8 +51,8 @@ public class MapsIdTeamMemberId implements Serializable
     {
         final int prime = 31;
         int result = 1;
+        result = prime * result + ( (mapsIdPlayer == null) ? 0 : mapsIdPlayer.hashCode() );
         result = prime * result + ( (mapsIdRoster == null) ? 0 : mapsIdRoster.hashCode() );
-        result = prime * result + ( (playerId == null) ? 0 : playerId.hashCode() );
         return result;
     }
 
@@ -66,6 +66,13 @@ public class MapsIdTeamMemberId implements Serializable
         if ( getClass() != obj.getClass() )
             return false;
         MapsIdTeamMemberId other = ( MapsIdTeamMemberId ) obj;
+        if ( mapsIdPlayer == null )
+        {
+            if ( other.mapsIdPlayer != null )
+                return false;
+        }
+        else if ( !mapsIdPlayer.equals( other.mapsIdPlayer ) )
+            return false;
         if ( mapsIdRoster == null )
         {
             if ( other.mapsIdRoster != null )
@@ -73,19 +80,12 @@ public class MapsIdTeamMemberId implements Serializable
         }
         else if ( !mapsIdRoster.equals( other.mapsIdRoster ) )
             return false;
-        if ( playerId == null )
-        {
-            if ( other.playerId != null )
-                return false;
-        }
-        else if ( !playerId.equals( other.playerId ) )
-            return false;
         return true;
     }
 
     @Override
     public String toString()
     {
-        return "[" + mapsIdRoster + ", " + playerId + "]";
+        return "[" + mapsIdPlayer + ", " + mapsIdRoster + "]";
     }
 }

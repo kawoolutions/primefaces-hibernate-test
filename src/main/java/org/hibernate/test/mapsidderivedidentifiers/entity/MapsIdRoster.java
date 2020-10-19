@@ -4,12 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -25,17 +27,11 @@ public class MapsIdRoster implements Serializable
     @Column
     private Integer id;
 
-    @Basic(optional = false)
-    @Column(name = "club_id")
-    private Integer clubId;
-
-    @Basic(optional = false)
-    @Column(name = "team_type_code")
-    private String teamTypeCode;
-
-    @Basic(optional = false)
-    @Column(name = "team_ordinal_nbr")
-    private Integer teamOrdinalNbr;
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "club_id", referencedColumnName = "club_id")
+    @JoinColumn(name = "team_type_code", referencedColumnName = "team_type_code")
+    @JoinColumn(name = "team_ordinal_nbr", referencedColumnName = "ordinal_nbr")
+    private MapsIdTeam mapsIdTeam;
 
     @OneToMany(mappedBy = "mapsIdRoster")
     private List<MapsIdScore> mapsIdScores;
@@ -57,9 +53,7 @@ public class MapsIdRoster implements Serializable
 
     public MapsIdRoster(Integer clubId, String teamTypeCode, Integer teamOrdinalNbr)
     {
-        this.clubId = clubId;
-        this.teamTypeCode = teamTypeCode;
-        this.teamOrdinalNbr = teamOrdinalNbr;
+        this.mapsIdTeam = new MapsIdTeam(clubId, teamTypeCode, teamOrdinalNbr);
     }
 
     public Integer getId()
@@ -74,32 +68,42 @@ public class MapsIdRoster implements Serializable
 
     public Integer getClubId()
     {
-        return clubId;
+        return mapsIdTeam.getClubId();
     }
 
     public void setClubId(Integer clubId)
     {
-        this.clubId = clubId;
+        mapsIdTeam.setClubId(clubId);
     }
 
     public String getTeamTypeCode()
     {
-        return teamTypeCode;
+        return mapsIdTeam.getTeamTypeCode();
     }
 
     public void setTeamTypeCode(String teamTypeCode)
     {
-        this.teamTypeCode = teamTypeCode;
+        mapsIdTeam.setTeamTypeCode(teamTypeCode);
     }
 
     public Integer getTeamOrdinalNbr()
     {
-        return teamOrdinalNbr;
+        return mapsIdTeam.getOrdinalNbr();
     }
 
     public void setTeamOrdinalNbr(Integer teamOrdinalNbr)
     {
-        this.teamOrdinalNbr = teamOrdinalNbr;
+        mapsIdTeam.setOrdinalNbr(teamOrdinalNbr);
+    }
+
+    public MapsIdTeam getMapsIdTeam()
+    {
+        return mapsIdTeam;
+    }
+
+    public void setMapsIdTeam(MapsIdTeam mapsIdTeam)
+    {
+        this.mapsIdTeam = mapsIdTeam;
     }
 
     public List<MapsIdScore> getMapsIdScores()
@@ -154,6 +158,6 @@ public class MapsIdRoster implements Serializable
     @Override
     public String toString()
     {
-        return "[" + id + ", " + clubId + ", " + teamTypeCode + ", " + teamOrdinalNbr + "]";
+        return "[" + id + "]";
     }
 }

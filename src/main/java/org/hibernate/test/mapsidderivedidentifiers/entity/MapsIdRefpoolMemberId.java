@@ -7,9 +7,9 @@ public class MapsIdRefpoolMemberId implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    private Integer refereeId;
+    private Integer mapsIdClub;
 
-    private Integer clubId;
+    private Integer refereeId;
 
     private Integer seasonStartYear;
 
@@ -24,8 +24,8 @@ public class MapsIdRefpoolMemberId implements Serializable
 
     public MapsIdRefpoolMemberId(Integer refereeId, Integer clubId, Integer seasonStartYear)
     {
+        this.mapsIdClub = Objects.requireNonNull(clubId);
         this.refereeId = Objects.requireNonNull(refereeId);
-        this.clubId = Objects.requireNonNull(clubId);
         this.seasonStartYear = Objects.requireNonNull(seasonStartYear);
     }
 
@@ -41,12 +41,12 @@ public class MapsIdRefpoolMemberId implements Serializable
 
     public Integer getClubId()
     {
-        return clubId;
+        return mapsIdClub;
     }
 
     public void setClubId(Integer clubId)
     {
-        this.clubId = clubId;
+        this.mapsIdClub = clubId;
     }
 
     public Integer getSeasonStartYear()
@@ -64,7 +64,7 @@ public class MapsIdRefpoolMemberId implements Serializable
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ( (clubId == null) ? 0 : clubId.hashCode() );
+        result = prime * result + ( (mapsIdClub == null) ? 0 : mapsIdClub.hashCode() );
         result = prime * result + ( (refereeId == null) ? 0 : refereeId.hashCode() );
         result = prime * result + ( (seasonStartYear == null) ? 0 : seasonStartYear.hashCode() );
         return result;
@@ -80,12 +80,12 @@ public class MapsIdRefpoolMemberId implements Serializable
         if ( getClass() != obj.getClass() )
             return false;
         MapsIdRefpoolMemberId other = ( MapsIdRefpoolMemberId ) obj;
-        if ( clubId == null )
+        if ( mapsIdClub == null )
         {
-            if ( other.clubId != null )
+            if ( other.mapsIdClub != null )
                 return false;
         }
-        else if ( !clubId.equals( other.clubId ) )
+        else if ( !mapsIdClub.equals( other.mapsIdClub ) )
             return false;
         if ( refereeId == null )
         {
@@ -107,6 +107,6 @@ public class MapsIdRefpoolMemberId implements Serializable
     @Override
     public String toString()
     {
-        return "[" + refereeId + ", " + clubId + ", " + seasonStartYear + "]";
+        return "[" + mapsIdClub + ", " + refereeId + ", " + seasonStartYear + "]";
     }
 }

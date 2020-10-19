@@ -2,9 +2,7 @@ package org.hibernate.test.mapsidderivedidentifiers.entity;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -22,13 +20,14 @@ public class MapsIdTeamMember implements Serializable
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "player_id")
-    private Integer playerId;
-
-    @Id
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "roster_id")
     private MapsIdRoster mapsIdRoster;
+
+    @Id
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "player_id")
+    private MapsIdPlayer mapsIdPlayer;
 
     @OneToMany(mappedBy = "mapsIdTeamMember")
     private List<MapsIdPlayerStat> mapsIdPlayerStats;
@@ -44,20 +43,20 @@ public class MapsIdTeamMember implements Serializable
 
     public MapsIdTeamMember(Integer playerId, Integer rosterId)
     {
-        this.playerId = Objects.requireNonNull(playerId);
-
         this.mapsIdRoster = new MapsIdRoster();
         this.mapsIdRoster.setId(rosterId);
+
+        this.mapsIdPlayer = new MapsIdPlayer(playerId);
     }
 
     public Integer getPlayerId()
     {
-        return playerId;
+        return mapsIdPlayer.getId();
     }
 
     public void setPlayerId(Integer playerId)
     {
-        this.playerId = playerId;
+        mapsIdPlayer.setId(playerId);
     }
 
     public Integer getRosterId()
@@ -80,6 +79,16 @@ public class MapsIdTeamMember implements Serializable
         this.mapsIdRoster = mapsIdRoster;
     }
 
+    public MapsIdPlayer getMapsIdPlayer()
+    {
+        return mapsIdPlayer;
+    }
+
+    public void setMapsIdPlayer(MapsIdPlayer mapsIdPlayer)
+    {
+        this.mapsIdPlayer = mapsIdPlayer;
+    }
+
     public List<MapsIdPlayerStat> getMapsIdPlayerStats()
     {
         return mapsIdPlayerStats;
@@ -95,8 +104,8 @@ public class MapsIdTeamMember implements Serializable
     {
         final int prime = 31;
         int result = 1;
+        result = prime * result + ( (mapsIdPlayer == null) ? 0 : mapsIdPlayer.hashCode() );
         result = prime * result + ( (mapsIdRoster == null) ? 0 : mapsIdRoster.hashCode() );
-        result = prime * result + ( (playerId == null) ? 0 : playerId.hashCode() );
         return result;
     }
 
@@ -110,6 +119,13 @@ public class MapsIdTeamMember implements Serializable
         if ( getClass() != obj.getClass() )
             return false;
         MapsIdTeamMember other = ( MapsIdTeamMember ) obj;
+        if ( mapsIdPlayer == null )
+        {
+            if ( other.mapsIdPlayer != null )
+                return false;
+        }
+        else if ( !mapsIdPlayer.equals( other.mapsIdPlayer ) )
+            return false;
         if ( mapsIdRoster == null )
         {
             if ( other.mapsIdRoster != null )
@@ -117,19 +133,12 @@ public class MapsIdTeamMember implements Serializable
         }
         else if ( !mapsIdRoster.equals( other.mapsIdRoster ) )
             return false;
-        if ( playerId == null )
-        {
-            if ( other.playerId != null )
-                return false;
-        }
-        else if ( !playerId.equals( other.playerId ) )
-            return false;
         return true;
     }
 
     @Override
     public String toString()
     {
-        return "[" + playerId + "]";
+        return "[" + "]";
     }
 }

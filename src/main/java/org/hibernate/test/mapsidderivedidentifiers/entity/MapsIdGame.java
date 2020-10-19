@@ -13,14 +13,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "\"MapsIdGames\"")
+@NamedEntityGraph(name = MapsIdGame.FETCH_SCORES, attributeNodes = {@NamedAttributeNode("mapsIdScores")})
 public class MapsIdGame implements Serializable
 {
     private static final long serialVersionUID = 1L;
+
+    public static final String FETCH_SCORES = "MapsIdGame.fetchScores";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
