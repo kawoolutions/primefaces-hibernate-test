@@ -22,7 +22,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "\"MapsIdGames\"")
 @NamedQuery(name = MapsIdGame.FIND_ALL, query = "SELECT ga FROM MapsIdGame ga")
-@NamedEntityGraph(name = MapsIdGame.FETCH_SCORES, attributeNodes = {@NamedAttributeNode("mapsIdScores")})
+@NamedEntityGraph(name = MapsIdGame.FETCH_SCORES, attributeNodes = {@NamedAttributeNode("scores")})
 public class MapsIdGame implements Serializable
 {
     private static final long serialVersionUID = 1L;
