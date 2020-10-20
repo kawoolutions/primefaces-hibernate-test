@@ -7,7 +7,7 @@ public class MapsIdScoreId implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    private Integer mapsIdGame;
+    private Integer game;
 
     private Boolean home;
 
@@ -22,18 +22,18 @@ public class MapsIdScoreId implements Serializable
 
     public MapsIdScoreId(Integer gameId, Boolean home)
     {
-        this.mapsIdGame = Objects.requireNonNull(gameId);
+        this.game = Objects.requireNonNull(gameId);
         this.home = Objects.requireNonNull(home);
     }
 
     public Integer getGameId()
     {
-        return mapsIdGame;
+        return game;
     }
 
     public void setGameId(Integer gameId)
     {
-        this.mapsIdGame = gameId;
+        this.game = gameId;
     }
 
     public Boolean getHome()
@@ -51,8 +51,8 @@ public class MapsIdScoreId implements Serializable
     {
         final int prime = 31;
         int result = 1;
+        result = prime * result + ( (game == null) ? 0 : game.hashCode() );
         result = prime * result + ( (home == null) ? 0 : home.hashCode() );
-        result = prime * result + ( (mapsIdGame == null) ? 0 : mapsIdGame.hashCode() );
         return result;
     }
 
@@ -66,6 +66,13 @@ public class MapsIdScoreId implements Serializable
         if ( getClass() != obj.getClass() )
             return false;
         MapsIdScoreId other = ( MapsIdScoreId ) obj;
+        if ( game == null )
+        {
+            if ( other.game != null )
+                return false;
+        }
+        else if ( !game.equals( other.game ) )
+            return false;
         if ( home == null )
         {
             if ( other.home != null )
@@ -73,19 +80,12 @@ public class MapsIdScoreId implements Serializable
         }
         else if ( !home.equals( other.home ) )
             return false;
-        if ( mapsIdGame == null )
-        {
-            if ( other.mapsIdGame != null )
-                return false;
-        }
-        else if ( !mapsIdGame.equals( other.mapsIdGame ) )
-            return false;
         return true;
     }
 
     @Override
     public String toString()
     {
-        return "[" + mapsIdGame + ", " + home + "]";
+        return "[" + game + ", " + home + "]";
     }
 }

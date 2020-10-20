@@ -32,10 +32,10 @@ public class MapsIdTeam implements Serializable
     @Id
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "club_id")
-    private MapsIdClub mapsIdClub;
+    private MapsIdClub club;
 
-    @OneToMany(mappedBy = "mapsIdTeam")
-    private List<MapsIdRoster> mapsIdRosters;
+    @OneToMany(mappedBy = "team")
+    private List<MapsIdRoster> rosters;
 
     public MapsIdTeam()
     {
@@ -51,17 +51,17 @@ public class MapsIdTeam implements Serializable
         this.teamTypeCode = Objects.requireNonNull(teamTypeCode);
         this.ordinalNbr = Objects.requireNonNull(ordinalNbr);
 
-        this.mapsIdClub = new MapsIdClub(clubId);
+        this.club = new MapsIdClub(clubId);
     }
 
     public Integer getClubId()
     {
-        return mapsIdClub.getId();
+        return club.getId();
     }
 
     public void setClubId(Integer clubId)
     {
-        mapsIdClub.setId(clubId);
+        club.setId(clubId);
     }
 
     public String getTeamTypeCode()
@@ -84,24 +84,24 @@ public class MapsIdTeam implements Serializable
         this.ordinalNbr = ordinalNbr;
     }
 
-    public MapsIdClub getMapsIdClub()
+    public MapsIdClub getClub()
     {
-        return mapsIdClub;
+        return club;
     }
 
-    public void setMapsIdClub(MapsIdClub mapsIdClub)
+    public void setClub(MapsIdClub club)
     {
-        this.mapsIdClub = mapsIdClub;
+        this.club = club;
     }
 
-    public List<MapsIdRoster> getMapsIdRosters()
+    public List<MapsIdRoster> getRosters()
     {
-        return mapsIdRosters;
+        return rosters;
     }
 
-    public void setMapsIdRosters(List<MapsIdRoster> mapsIdRosters)
+    public void setRosters(List<MapsIdRoster> rosters)
     {
-        this.mapsIdRosters = mapsIdRosters;
+        this.rosters = rosters;
     }
 
     @Override
@@ -109,7 +109,7 @@ public class MapsIdTeam implements Serializable
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ( (mapsIdClub == null) ? 0 : mapsIdClub.hashCode() );
+        result = prime * result + ( (club == null) ? 0 : club.hashCode() );
         result = prime * result + ( (ordinalNbr == null) ? 0 : ordinalNbr.hashCode() );
         result = prime * result + ( (teamTypeCode == null) ? 0 : teamTypeCode.hashCode() );
         return result;
@@ -125,12 +125,12 @@ public class MapsIdTeam implements Serializable
         if ( getClass() != obj.getClass() )
             return false;
         MapsIdTeam other = ( MapsIdTeam ) obj;
-        if ( mapsIdClub == null )
+        if ( club == null )
         {
-            if ( other.mapsIdClub != null )
+            if ( other.club != null )
                 return false;
         }
-        else if ( !mapsIdClub.equals( other.mapsIdClub ) )
+        else if ( !club.equals( other.club ) )
             return false;
         if ( ordinalNbr == null )
         {

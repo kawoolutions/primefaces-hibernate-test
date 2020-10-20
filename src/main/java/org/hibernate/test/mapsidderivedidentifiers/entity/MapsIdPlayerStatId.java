@@ -6,9 +6,9 @@ public class MapsIdPlayerStatId implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    private MapsIdScoreId mapsIdScore;
+    private MapsIdScoreId score;
 
-    private MapsIdTeamMemberId mapsIdTeamMember;
+    private MapsIdTeamMemberId teamMember;
 
     public MapsIdPlayerStatId()
     {
@@ -21,68 +21,68 @@ public class MapsIdPlayerStatId implements Serializable
 
     public MapsIdPlayerStatId(Integer gameId, Boolean home, Integer playerId, Integer rosterId)
     {
-        this.mapsIdScore = new MapsIdScoreId(gameId, home);
-        this.mapsIdTeamMember = new MapsIdTeamMemberId(playerId, rosterId);
+        this.score = new MapsIdScoreId(gameId, home);
+        this.teamMember = new MapsIdTeamMemberId(playerId, rosterId);
     }
 
     public Integer getGameId()
     {
-        return mapsIdScore.getGameId();
+        return score.getGameId();
     }
 
     public void setGameId(Integer gameId)
     {
-        mapsIdScore.setGameId(gameId);
+        score.setGameId(gameId);
     }
 
     public Boolean getHome()
     {
-        return mapsIdScore.getHome();
+        return score.getHome();
     }
 
     public void setHome(Boolean home)
     {
-        mapsIdScore.setHome(home);
+        score.setHome(home);
     }
 
     public Integer getPlayerId()
     {
-        return mapsIdTeamMember.getPlayerId();
+        return teamMember.getPlayerId();
     }
 
     public void setPlayerId(Integer playerId)
     {
-        mapsIdTeamMember.setPlayerId(playerId);
+        teamMember.setPlayerId(playerId);
     }
 
     public Integer getRosterId()
     {
-        return mapsIdTeamMember.getRosterId();
+        return teamMember.getRosterId();
     }
 
     public void setRosterId(Integer rosterId)
     {
-        mapsIdTeamMember.setRosterId(rosterId);
+        teamMember.setRosterId(rosterId);
     }
 
     public MapsIdScoreId getMapsIdScoreId()
     {
-        return mapsIdScore;
+        return score;
     }
 
     public void setMapsIdScoreId(MapsIdScoreId mapsIdScoreId)
     {
-        this.mapsIdScore = mapsIdScoreId;
+        this.score = mapsIdScoreId;
     }
 
     public MapsIdTeamMemberId getMapsIdTeamMemberId()
     {
-        return mapsIdTeamMember;
+        return teamMember;
     }
 
     public void setMapsIdTeamMemberId(MapsIdTeamMemberId mapsIdTeamMemberId)
     {
-        this.mapsIdTeamMember = mapsIdTeamMemberId;
+        this.teamMember = mapsIdTeamMemberId;
     }
 
     @Override
@@ -90,8 +90,8 @@ public class MapsIdPlayerStatId implements Serializable
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ( (mapsIdScore == null) ? 0 : mapsIdScore.hashCode() );
-        result = prime * result + ( (mapsIdTeamMember == null) ? 0 : mapsIdTeamMember.hashCode() );
+        result = prime * result + ( (score == null) ? 0 : score.hashCode() );
+        result = prime * result + ( (teamMember == null) ? 0 : teamMember.hashCode() );
         return result;
     }
 
@@ -105,19 +105,19 @@ public class MapsIdPlayerStatId implements Serializable
         if ( getClass() != obj.getClass() )
             return false;
         MapsIdPlayerStatId other = ( MapsIdPlayerStatId ) obj;
-        if ( mapsIdScore == null )
+        if ( score == null )
         {
-            if ( other.mapsIdScore != null )
+            if ( other.score != null )
                 return false;
         }
-        else if ( !mapsIdScore.equals( other.mapsIdScore ) )
+        else if ( !score.equals( other.score ) )
             return false;
-        if ( mapsIdTeamMember == null )
+        if ( teamMember == null )
         {
-            if ( other.mapsIdTeamMember != null )
+            if ( other.teamMember != null )
                 return false;
         }
-        else if ( !mapsIdTeamMember.equals( other.mapsIdTeamMember ) )
+        else if ( !teamMember.equals( other.teamMember ) )
             return false;
         return true;
     }
@@ -125,6 +125,6 @@ public class MapsIdPlayerStatId implements Serializable
     @Override
     public String toString()
     {
-        return "[" + mapsIdScore + ", " + mapsIdTeamMember + "]";
+        return "[" + score + ", " + teamMember + "]";
     }
 }

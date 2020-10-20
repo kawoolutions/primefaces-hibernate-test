@@ -15,16 +15,19 @@ import javax.persistence.Id;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "\"MapsIdGames\"")
+@NamedQuery(name = MapsIdGame.FIND_ALL, query = "SELECT ga FROM MapsIdGame ga")
 @NamedEntityGraph(name = MapsIdGame.FETCH_SCORES, attributeNodes = {@NamedAttributeNode("mapsIdScores")})
 public class MapsIdGame implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
+    public static final String FIND_ALL = "MapsIdGame.findAll";
     public static final String FETCH_SCORES = "MapsIdGame.fetchScores";
 
     @Id
@@ -40,12 +43,12 @@ public class MapsIdGame implements Serializable
     @Column(name = "scheduled_tipoff")
     private LocalDateTime scheduledTipoff;
 
-    @OneToMany(mappedBy = "mapsIdGame")
-    private List<MapsIdAssignment> mapsIdAssignments;
+    @OneToMany(mappedBy = "game")
+    private List<MapsIdAssignment> assignments;
 
-    @OneToMany(mappedBy = "mapsIdGame")
+    @OneToMany(mappedBy = "game")
     @MapKeyColumn(name = "is_home")
-    private Map<Boolean, MapsIdScore> mapsIdScores;
+    private Map<Boolean, MapsIdScore> scores;
 
     public MapsIdGame()
     {
@@ -99,24 +102,24 @@ public class MapsIdGame implements Serializable
         this.scheduledTipoff = scheduledTipoff;
     }
 
-    public List<MapsIdAssignment> getMapsIdAssignments()
+    public List<MapsIdAssignment> getAssignments()
     {
-        return mapsIdAssignments;
+        return assignments;
     }
 
-    public void setMapsIdAssignments(List<MapsIdAssignment> mapsIdAssignments)
+    public void setAssignments(List<MapsIdAssignment> assignments)
     {
-        this.mapsIdAssignments = mapsIdAssignments;
+        this.assignments = assignments;
     }
 
-    public Map<Boolean, MapsIdScore> getMapsIdScores()
+    public Map<Boolean, MapsIdScore> getScores()
     {
-        return mapsIdScores;
+        return scores;
     }
 
-    public void setMapsIdScores(Map<Boolean, MapsIdScore> mapsIdScores)
+    public void setScores(Map<Boolean, MapsIdScore> scores)
     {
-        this.mapsIdScores = mapsIdScores;
+        this.scores = scores;
     }
 
     @Override

@@ -7,9 +7,9 @@ public class MapsIdTeamMemberId implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    private Integer mapsIdPlayer;
+    private Integer player;
 
-    private Integer mapsIdRoster;
+    private Integer roster;
 
     public MapsIdTeamMemberId()
     {
@@ -22,28 +22,28 @@ public class MapsIdTeamMemberId implements Serializable
 
     public MapsIdTeamMemberId(Integer playerId, Integer rosterId)
     {
-        this.mapsIdPlayer = Objects.requireNonNull(playerId);
-        this.mapsIdRoster = Objects.requireNonNull(rosterId);
+        this.player = Objects.requireNonNull(playerId);
+        this.roster = Objects.requireNonNull(rosterId);
     }
 
     public Integer getPlayerId()
     {
-        return mapsIdPlayer;
+        return player;
     }
 
     public void setPlayerId(Integer playerId)
     {
-        this.mapsIdPlayer = playerId;
+        this.player = playerId;
     }
 
     public Integer getRosterId()
     {
-        return mapsIdRoster;
+        return roster;
     }
 
     public void setRosterId(Integer rosterId)
     {
-        this.mapsIdRoster = rosterId;
+        this.roster = rosterId;
     }
 
     @Override
@@ -51,8 +51,8 @@ public class MapsIdTeamMemberId implements Serializable
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ( (mapsIdPlayer == null) ? 0 : mapsIdPlayer.hashCode() );
-        result = prime * result + ( (mapsIdRoster == null) ? 0 : mapsIdRoster.hashCode() );
+        result = prime * result + ( (player == null) ? 0 : player.hashCode() );
+        result = prime * result + ( (roster == null) ? 0 : roster.hashCode() );
         return result;
     }
 
@@ -66,19 +66,19 @@ public class MapsIdTeamMemberId implements Serializable
         if ( getClass() != obj.getClass() )
             return false;
         MapsIdTeamMemberId other = ( MapsIdTeamMemberId ) obj;
-        if ( mapsIdPlayer == null )
+        if ( player == null )
         {
-            if ( other.mapsIdPlayer != null )
+            if ( other.player != null )
                 return false;
         }
-        else if ( !mapsIdPlayer.equals( other.mapsIdPlayer ) )
+        else if ( !player.equals( other.player ) )
             return false;
-        if ( mapsIdRoster == null )
+        if ( roster == null )
         {
-            if ( other.mapsIdRoster != null )
+            if ( other.roster != null )
                 return false;
         }
-        else if ( !mapsIdRoster.equals( other.mapsIdRoster ) )
+        else if ( !roster.equals( other.roster ) )
             return false;
         return true;
     }
@@ -86,6 +86,6 @@ public class MapsIdTeamMemberId implements Serializable
     @Override
     public String toString()
     {
-        return "[" + mapsIdPlayer + ", " + mapsIdRoster + "]";
+        return "[" + player + ", " + roster + "]";
     }
 }

@@ -26,14 +26,14 @@ public class MapsIdAssignment implements Serializable
     @Id
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "game_id")
-    private MapsIdGame mapsIdGame;
+    private MapsIdGame game;
 
     @Id
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "referee_id", referencedColumnName = "referee_id")
     @JoinColumn(name = "club_id", referencedColumnName = "club_id")
     @JoinColumn(name = "season_start_year", referencedColumnName = "season_start_year")
-    private MapsIdRefpoolMember mapsIdRefpoolMember;
+    private MapsIdRefpoolMember refpoolMember;
 
     public MapsIdAssignment()
     {
@@ -48,50 +48,50 @@ public class MapsIdAssignment implements Serializable
 
     public MapsIdAssignment(Integer refereeId, Integer clubId, Integer seasonStartYear, Integer gameId)
     {
-        this.mapsIdGame = new MapsIdGame();
-        this.mapsIdGame.setId(gameId);
+        this.game = new MapsIdGame();
+        this.game.setId(gameId);
 
-        this.mapsIdRefpoolMember = new MapsIdRefpoolMember(refereeId, clubId, seasonStartYear);
+        this.refpoolMember = new MapsIdRefpoolMember(refereeId, clubId, seasonStartYear);
     }
 
     public Integer getRefereeId()
     {
-        return mapsIdRefpoolMember.getRefereeId();
+        return refpoolMember.getRefereeId();
     }
 
     public void setRefereeId(Integer refereeId)
     {
-        mapsIdRefpoolMember.setRefereeId(refereeId);
+        refpoolMember.setRefereeId(refereeId);
     }
 
     public Integer getClubId()
     {
-        return mapsIdRefpoolMember.getClubId();
+        return refpoolMember.getClubId();
     }
 
     public void setClubId(Integer clubId)
     {
-        mapsIdRefpoolMember.setClubId(clubId);
+        refpoolMember.setClubId(clubId);
     }
 
     public Integer getSeasonStartYear()
     {
-        return mapsIdRefpoolMember.getSeasonStartYear();
+        return refpoolMember.getSeasonStartYear();
     }
 
     public void setSeasonStartYear(Integer seasonStartYear)
     {
-        mapsIdRefpoolMember.setSeasonStartYear(seasonStartYear);
+        refpoolMember.setSeasonStartYear(seasonStartYear);
     }
 
     public Integer getGameId()
     {
-        return mapsIdGame.getId();
+        return game.getId();
     }
 
     public void setGameId(Integer gameId)
     {
-        mapsIdGame.setId(gameId);
+        game.setId(gameId);
     }
 
     public Boolean getWasAbsent()
@@ -104,24 +104,24 @@ public class MapsIdAssignment implements Serializable
         this.wasAbsent = wasAbsent;
     }
 
-    public MapsIdGame getMapsIdGame()
+    public MapsIdGame getGame()
     {
-        return mapsIdGame;
+        return game;
     }
 
-    public void setMapsIdGame(MapsIdGame mapsIdGame)
+    public void setGame(MapsIdGame game)
     {
-        this.mapsIdGame = mapsIdGame;
+        this.game = game;
     }
 
-    public MapsIdRefpoolMember getMapsIdRefpoolMember()
+    public MapsIdRefpoolMember getRefpoolMember()
     {
-        return mapsIdRefpoolMember;
+        return refpoolMember;
     }
 
-    public void setMapsIdRefpoolMember(MapsIdRefpoolMember mapsIdRefpoolMember)
+    public void setRefpoolMember(MapsIdRefpoolMember refpoolMember)
     {
-        this.mapsIdRefpoolMember = mapsIdRefpoolMember;
+        this.refpoolMember = refpoolMember;
     }
 
     @Override
@@ -129,8 +129,8 @@ public class MapsIdAssignment implements Serializable
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ( (mapsIdGame == null) ? 0 : mapsIdGame.hashCode() );
-        result = prime * result + ( (mapsIdRefpoolMember == null) ? 0 : mapsIdRefpoolMember.hashCode() );
+        result = prime * result + ( (game == null) ? 0 : game.hashCode() );
+        result = prime * result + ( (refpoolMember == null) ? 0 : refpoolMember.hashCode() );
         return result;
     }
 
@@ -144,19 +144,19 @@ public class MapsIdAssignment implements Serializable
         if ( getClass() != obj.getClass() )
             return false;
         MapsIdAssignment other = ( MapsIdAssignment ) obj;
-        if ( mapsIdGame == null )
+        if ( game == null )
         {
-            if ( other.mapsIdGame != null )
+            if ( other.game != null )
                 return false;
         }
-        else if ( !mapsIdGame.equals( other.mapsIdGame ) )
+        else if ( !game.equals( other.game ) )
             return false;
-        if ( mapsIdRefpoolMember == null )
+        if ( refpoolMember == null )
         {
-            if ( other.mapsIdRefpoolMember != null )
+            if ( other.refpoolMember != null )
                 return false;
         }
-        else if ( !mapsIdRefpoolMember.equals( other.mapsIdRefpoolMember ) )
+        else if ( !refpoolMember.equals( other.refpoolMember ) )
             return false;
         return true;
     }

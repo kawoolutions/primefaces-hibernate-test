@@ -32,10 +32,10 @@ public class MapsIdRefpoolMember implements Serializable
     @Id
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "club_id")
-    private MapsIdClub mapsIdClub;
+    private MapsIdClub club;
 
-    @OneToMany(mappedBy = "mapsIdRefpoolMember")
-    private List<MapsIdAssignment> mapsIdAssignments;
+    @OneToMany(mappedBy = "refpoolMember")
+    private List<MapsIdAssignment> assignments;
 
     public MapsIdRefpoolMember()
     {
@@ -51,7 +51,7 @@ public class MapsIdRefpoolMember implements Serializable
         this.refereeId = Objects.requireNonNull(refereeId);
         this.seasonStartYear = Objects.requireNonNull(seasonStartYear);
 
-        this.mapsIdClub = new MapsIdClub(clubId);
+        this.club = new MapsIdClub(clubId);
     }
 
     public Integer getRefereeId()
@@ -66,12 +66,12 @@ public class MapsIdRefpoolMember implements Serializable
 
     public Integer getClubId()
     {
-        return mapsIdClub.getId();
+        return club.getId();
     }
 
     public void setClubId(Integer clubId)
     {
-        mapsIdClub.setId(clubId);
+        club.setId(clubId);
     }
 
     public Integer getSeasonStartYear()
@@ -84,24 +84,24 @@ public class MapsIdRefpoolMember implements Serializable
         this.seasonStartYear = seasonStartYear;
     }
 
-    public MapsIdClub getMapsIdClub()
+    public MapsIdClub getClub()
     {
-        return mapsIdClub;
+        return club;
     }
 
-    public void setMapsIdClub(MapsIdClub mapsIdClub)
+    public void setClub(MapsIdClub club)
     {
-        this.mapsIdClub = mapsIdClub;
+        this.club = club;
     }
 
-    public List<MapsIdAssignment> getMapsIdAssignments()
+    public List<MapsIdAssignment> getAssignments()
     {
-        return mapsIdAssignments;
+        return assignments;
     }
 
-    public void setMapsIdAssignments(List<MapsIdAssignment> mapsIdAssignments)
+    public void setAssignments(List<MapsIdAssignment> assignments)
     {
-        this.mapsIdAssignments = mapsIdAssignments;
+        this.assignments = assignments;
     }
 
     @Override
@@ -109,7 +109,7 @@ public class MapsIdRefpoolMember implements Serializable
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ( (mapsIdClub == null) ? 0 : mapsIdClub.hashCode() );
+        result = prime * result + ( (club == null) ? 0 : club.hashCode() );
         result = prime * result + ( (refereeId == null) ? 0 : refereeId.hashCode() );
         result = prime * result + ( (seasonStartYear == null) ? 0 : seasonStartYear.hashCode() );
         return result;
@@ -125,12 +125,12 @@ public class MapsIdRefpoolMember implements Serializable
         if ( getClass() != obj.getClass() )
             return false;
         MapsIdRefpoolMember other = ( MapsIdRefpoolMember ) obj;
-        if ( mapsIdClub == null )
+        if ( club == null )
         {
-            if ( other.mapsIdClub != null )
+            if ( other.club != null )
                 return false;
         }
-        else if ( !mapsIdClub.equals( other.mapsIdClub ) )
+        else if ( !club.equals( other.club ) )
             return false;
         if ( refereeId == null )
         {

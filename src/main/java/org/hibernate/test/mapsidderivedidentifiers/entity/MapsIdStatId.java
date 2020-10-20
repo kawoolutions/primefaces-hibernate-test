@@ -9,7 +9,7 @@ public class MapsIdStatId implements Serializable
 
     private Integer period;
 
-    private MapsIdPlayerStatId mapsIdPlayerStat;
+    private MapsIdPlayerStatId playerStat;
 
     public MapsIdStatId()
     {
@@ -24,47 +24,47 @@ public class MapsIdStatId implements Serializable
     {
         this.period = Objects.requireNonNull(period);
 
-        this.mapsIdPlayerStat = new MapsIdPlayerStatId(gameId, home, playerId, rosterId);
+        this.playerStat = new MapsIdPlayerStatId(gameId, home, playerId, rosterId);
     }
 
     public Integer getGameId()
     {
-        return mapsIdPlayerStat.getGameId();
+        return playerStat.getGameId();
     }
 
     public void setGameId(Integer gameId)
     {
-        mapsIdPlayerStat.setGameId(gameId);
+        playerStat.setGameId(gameId);
     }
 
     public Boolean getHome()
     {
-        return mapsIdPlayerStat.getHome();
+        return playerStat.getHome();
     }
 
     public void setHome(Boolean home)
     {
-        mapsIdPlayerStat.setHome(home);
+        playerStat.setHome(home);
     }
 
     public Integer getPlayerId()
     {
-        return mapsIdPlayerStat.getPlayerId();
+        return playerStat.getPlayerId();
     }
 
     public void setPlayerId(Integer playerId)
     {
-        mapsIdPlayerStat.setPlayerId(playerId);
+        playerStat.setPlayerId(playerId);
     }
 
     public Integer getRosterId()
     {
-        return mapsIdPlayerStat.getRosterId();
+        return playerStat.getRosterId();
     }
 
     public void setRosterId(Integer rosterId)
     {
-        mapsIdPlayerStat.setRosterId(rosterId);
+        playerStat.setRosterId(rosterId);
     }
 
     public Integer getPeriod()
@@ -79,12 +79,12 @@ public class MapsIdStatId implements Serializable
 
     public MapsIdPlayerStatId getMapsIdPlayerStatId()
     {
-        return mapsIdPlayerStat;
+        return playerStat;
     }
 
     public void setMapsIdPlayerStatId(MapsIdPlayerStatId mapsIdPlayerStatId)
     {
-        this.mapsIdPlayerStat = mapsIdPlayerStatId;
+        this.playerStat = mapsIdPlayerStatId;
     }
 
     @Override
@@ -92,8 +92,8 @@ public class MapsIdStatId implements Serializable
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ( (mapsIdPlayerStat == null) ? 0 : mapsIdPlayerStat.hashCode() );
         result = prime * result + ( (period == null) ? 0 : period.hashCode() );
+        result = prime * result + ( (playerStat == null) ? 0 : playerStat.hashCode() );
         return result;
     }
 
@@ -107,13 +107,6 @@ public class MapsIdStatId implements Serializable
         if ( getClass() != obj.getClass() )
             return false;
         MapsIdStatId other = ( MapsIdStatId ) obj;
-        if ( mapsIdPlayerStat == null )
-        {
-            if ( other.mapsIdPlayerStat != null )
-                return false;
-        }
-        else if ( !mapsIdPlayerStat.equals( other.mapsIdPlayerStat ) )
-            return false;
         if ( period == null )
         {
             if ( other.period != null )
@@ -121,12 +114,19 @@ public class MapsIdStatId implements Serializable
         }
         else if ( !period.equals( other.period ) )
             return false;
+        if ( playerStat == null )
+        {
+            if ( other.playerStat != null )
+                return false;
+        }
+        else if ( !playerStat.equals( other.playerStat ) )
+            return false;
         return true;
     }
 
     @Override
     public String toString()
     {
-        return "[" + period + ", " + mapsIdPlayerStat + "]";
+        return "[" + period + ", " + playerStat + "]";
     }
 }

@@ -22,15 +22,15 @@ public class MapsIdTeamMember implements Serializable
     @Id
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "roster_id")
-    private MapsIdRoster mapsIdRoster;
+    private MapsIdRoster roster;
 
     @Id
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "player_id")
-    private MapsIdPlayer mapsIdPlayer;
+    private MapsIdPlayer player;
 
-    @OneToMany(mappedBy = "mapsIdTeamMember")
-    private List<MapsIdPlayerStat> mapsIdPlayerStats;
+    @OneToMany(mappedBy = "teamMember")
+    private List<MapsIdPlayerStat> playerStats;
 
     public MapsIdTeamMember()
     {
@@ -43,60 +43,60 @@ public class MapsIdTeamMember implements Serializable
 
     public MapsIdTeamMember(Integer playerId, Integer rosterId)
     {
-        this.mapsIdRoster = new MapsIdRoster();
-        this.mapsIdRoster.setId(rosterId);
+        this.roster = new MapsIdRoster();
+        this.roster.setId(rosterId);
 
-        this.mapsIdPlayer = new MapsIdPlayer(playerId);
+        this.player = new MapsIdPlayer(playerId);
     }
 
     public Integer getPlayerId()
     {
-        return mapsIdPlayer.getId();
+        return player.getId();
     }
 
     public void setPlayerId(Integer playerId)
     {
-        mapsIdPlayer.setId(playerId);
+        player.setId(playerId);
     }
 
     public Integer getRosterId()
     {
-        return mapsIdRoster.getId();
+        return roster.getId();
     }
 
     public void setRosterId(Integer rosterId)
     {
-        mapsIdRoster.setId(rosterId);
+        roster.setId(rosterId);
     }
 
-    public MapsIdRoster getMapsIdRoster()
+    public MapsIdRoster getRoster()
     {
-        return mapsIdRoster;
+        return roster;
     }
 
-    public void setMapsIdRoster(MapsIdRoster mapsIdRoster)
+    public void setRoster(MapsIdRoster roster)
     {
-        this.mapsIdRoster = mapsIdRoster;
+        this.roster = roster;
     }
 
-    public MapsIdPlayer getMapsIdPlayer()
+    public MapsIdPlayer getPlayer()
     {
-        return mapsIdPlayer;
+        return player;
     }
 
-    public void setMapsIdPlayer(MapsIdPlayer mapsIdPlayer)
+    public void setPlayer(MapsIdPlayer player)
     {
-        this.mapsIdPlayer = mapsIdPlayer;
+        this.player = player;
     }
 
-    public List<MapsIdPlayerStat> getMapsIdPlayerStats()
+    public List<MapsIdPlayerStat> getPlayerStats()
     {
-        return mapsIdPlayerStats;
+        return playerStats;
     }
 
-    public void setMapsIdPlayerStats(List<MapsIdPlayerStat> mapsIdPlayerStats)
+    public void setPlayerStats(List<MapsIdPlayerStat> playerStats)
     {
-        this.mapsIdPlayerStats = mapsIdPlayerStats;
+        this.playerStats = playerStats;
     }
 
     @Override
@@ -104,8 +104,8 @@ public class MapsIdTeamMember implements Serializable
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ( (mapsIdPlayer == null) ? 0 : mapsIdPlayer.hashCode() );
-        result = prime * result + ( (mapsIdRoster == null) ? 0 : mapsIdRoster.hashCode() );
+        result = prime * result + ( (player == null) ? 0 : player.hashCode() );
+        result = prime * result + ( (roster == null) ? 0 : roster.hashCode() );
         return result;
     }
 
@@ -119,19 +119,19 @@ public class MapsIdTeamMember implements Serializable
         if ( getClass() != obj.getClass() )
             return false;
         MapsIdTeamMember other = ( MapsIdTeamMember ) obj;
-        if ( mapsIdPlayer == null )
+        if ( player == null )
         {
-            if ( other.mapsIdPlayer != null )
+            if ( other.player != null )
                 return false;
         }
-        else if ( !mapsIdPlayer.equals( other.mapsIdPlayer ) )
+        else if ( !player.equals( other.player ) )
             return false;
-        if ( mapsIdRoster == null )
+        if ( roster == null )
         {
-            if ( other.mapsIdRoster != null )
+            if ( other.roster != null )
                 return false;
         }
-        else if ( !mapsIdRoster.equals( other.mapsIdRoster ) )
+        else if ( !roster.equals( other.roster ) )
             return false;
         return true;
     }

@@ -7,7 +7,7 @@ public class MapsIdTeamId implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    private Integer mapsIdClub;
+    private Integer club;
 
     private String teamTypeCode;
 
@@ -24,19 +24,19 @@ public class MapsIdTeamId implements Serializable
 
     public MapsIdTeamId(Integer clubId, String teamTypeCode, Integer ordinalNbr)
     {
-        this.mapsIdClub = Objects.requireNonNull(clubId);
+        this.club = Objects.requireNonNull(clubId);
         this.teamTypeCode = Objects.requireNonNull(teamTypeCode);
         this.ordinalNbr = Objects.requireNonNull(ordinalNbr);
     }
 
     public Integer getClubId()
     {
-        return mapsIdClub;
+        return club;
     }
 
     public void setClubId(Integer clubId)
     {
-        this.mapsIdClub = clubId;
+        this.club = clubId;
     }
 
     public String getTeamTypeCode()
@@ -64,7 +64,7 @@ public class MapsIdTeamId implements Serializable
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ( (mapsIdClub == null) ? 0 : mapsIdClub.hashCode() );
+        result = prime * result + ( (club == null) ? 0 : club.hashCode() );
         result = prime * result + ( (ordinalNbr == null) ? 0 : ordinalNbr.hashCode() );
         result = prime * result + ( (teamTypeCode == null) ? 0 : teamTypeCode.hashCode() );
         return result;
@@ -80,12 +80,12 @@ public class MapsIdTeamId implements Serializable
         if ( getClass() != obj.getClass() )
             return false;
         MapsIdTeamId other = ( MapsIdTeamId ) obj;
-        if ( mapsIdClub == null )
+        if ( club == null )
         {
-            if ( other.mapsIdClub != null )
+            if ( other.club != null )
                 return false;
         }
-        else if ( !mapsIdClub.equals( other.mapsIdClub ) )
+        else if ( !club.equals( other.club ) )
             return false;
         if ( ordinalNbr == null )
         {
@@ -107,6 +107,6 @@ public class MapsIdTeamId implements Serializable
     @Override
     public String toString()
     {
-        return "[" + mapsIdClub + ", " + teamTypeCode + ", " + ordinalNbr + "]";
+        return "[" + club + ", " + teamTypeCode + ", " + ordinalNbr + "]";
     }
 }

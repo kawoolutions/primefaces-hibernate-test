@@ -25,11 +25,11 @@ public class MapsIdClub implements Serializable
     @Column
     private String name;
 
-    @OneToMany(mappedBy = "mapsIdClub")
-    private List<MapsIdRefpoolMember> mapsIdRefpoolMembers;
+    @OneToMany(mappedBy = "club")
+    private List<MapsIdRefpoolMember> refpoolMembers;
 
-    @OneToMany(mappedBy = "mapsIdClub")
-    private List<MapsIdTeam> mapsIdTeams;
+    @OneToMany(mappedBy = "club")
+    private List<MapsIdTeam> teams;
 
     public MapsIdClub()
     {
@@ -76,24 +76,24 @@ public class MapsIdClub implements Serializable
         this.name = name;
     }
 
-    public List<MapsIdRefpoolMember> getMapsIdRefpoolMembers()
+    public List<MapsIdRefpoolMember> getRefpoolMembers()
     {
-        return mapsIdRefpoolMembers;
+        return refpoolMembers;
     }
 
-    public void setMapsIdRefpoolMembers(List<MapsIdRefpoolMember> mapsIdRefpoolMembers)
+    public void setRefpoolMembers(List<MapsIdRefpoolMember> refpoolMembers)
     {
-        this.mapsIdRefpoolMembers = mapsIdRefpoolMembers;
+        this.refpoolMembers = refpoolMembers;
     }
 
-    public List<MapsIdTeam> getMapsIdTeams()
+    public List<MapsIdTeam> getTeams()
     {
-        return mapsIdTeams;
+        return teams;
     }
 
-    public void setMapsIdTeams(List<MapsIdTeam> mapsIdTeams)
+    public void setTeams(List<MapsIdTeam> teams)
     {
-        this.mapsIdTeams = mapsIdTeams;
+        this.teams = teams;
     }
 
     @Override

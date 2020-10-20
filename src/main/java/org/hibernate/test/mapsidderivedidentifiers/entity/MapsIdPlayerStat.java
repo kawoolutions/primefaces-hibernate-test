@@ -30,17 +30,17 @@ public class MapsIdPlayerStat implements Serializable
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "game_id", referencedColumnName = "game_id")
     @JoinColumn(name = "is_home", referencedColumnName = "is_home")
-    private MapsIdScore mapsIdScore;
+    private MapsIdScore score;
 
     @Id
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "player_id", referencedColumnName = "player_id")
     @JoinColumn(name = "roster_id", referencedColumnName = "roster_id")
-    private MapsIdTeamMember mapsIdTeamMember;
+    private MapsIdTeamMember teamMember;
 
-    @OneToMany(mappedBy = "mapsIdPlayerStat")
+    @OneToMany(mappedBy = "playerStat")
     @OrderBy("period")
-    private List<MapsIdStat> mapsIdStats;
+    private List<MapsIdStat> stats;
 
     public MapsIdPlayerStat()
     {
@@ -65,48 +65,48 @@ public class MapsIdPlayerStat implements Serializable
     {
         this.jerseyNbr = jerseyNbr;
 
-        this.mapsIdScore = new MapsIdScore(gameId, home);
-        this.mapsIdTeamMember = new MapsIdTeamMember(playerId, rosterId);
+        this.score = new MapsIdScore(gameId, home);
+        this.teamMember = new MapsIdTeamMember(playerId, rosterId);
     }
 
     public Integer getGameId()
     {
-        return mapsIdScore.getGameId();
+        return score.getGameId();
     }
 
     public void setGameId(Integer gameId)
     {
-        mapsIdScore.setGameId(gameId);
+        score.setGameId(gameId);
     }
 
     public Boolean getHome()
     {
-        return mapsIdScore.getHome();
+        return score.getHome();
     }
 
     public void setHome(Boolean home)
     {
-        mapsIdScore.setHome(home);
+        score.setHome(home);
     }
 
     public Integer getPlayerId()
     {
-        return mapsIdTeamMember.getPlayerId();
+        return teamMember.getPlayerId();
     }
 
     public void setPlayerId(Integer playerId)
     {
-        mapsIdTeamMember.setPlayerId(playerId);
+        teamMember.setPlayerId(playerId);
     }
 
     public Integer getRosterId()
     {
-        return mapsIdTeamMember.getRosterId();
+        return teamMember.getRosterId();
     }
 
     public void setRosterId(Integer rosterId)
     {
-        mapsIdTeamMember.setRosterId(rosterId);
+        teamMember.setRosterId(rosterId);
     }
 
     public Integer getJerseyNbr()
@@ -119,34 +119,34 @@ public class MapsIdPlayerStat implements Serializable
         this.jerseyNbr = jerseyNbr;
     }
 
-    public MapsIdScore getMapsIdScore()
+    public MapsIdScore getScore()
     {
-        return mapsIdScore;
+        return score;
     }
 
-    public void setMapsIdScore(MapsIdScore mapsIdScore)
+    public void setScore(MapsIdScore score)
     {
-        this.mapsIdScore = mapsIdScore;
+        this.score = score;
     }
 
-    public MapsIdTeamMember getMapsIdTeamMember()
+    public MapsIdTeamMember getTeamMember()
     {
-        return mapsIdTeamMember;
+        return teamMember;
     }
 
-    public void setMapsIdTeamMember(MapsIdTeamMember mapsIdTeamMember)
+    public void setTeamMember(MapsIdTeamMember teamMember)
     {
-        this.mapsIdTeamMember = mapsIdTeamMember;
+        this.teamMember = teamMember;
     }
 
-    public List<MapsIdStat> getMapsIdStats()
+    public List<MapsIdStat> getStats()
     {
-        return mapsIdStats;
+        return stats;
     }
 
-    public void setMapsIdStats(List<MapsIdStat> mapsIdStats)
+    public void setStats(List<MapsIdStat> stats)
     {
-        this.mapsIdStats = mapsIdStats;
+        this.stats = stats;
     }
 
     @Override
@@ -154,8 +154,8 @@ public class MapsIdPlayerStat implements Serializable
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ( (mapsIdScore == null) ? 0 : mapsIdScore.hashCode() );
-        result = prime * result + ( (mapsIdTeamMember == null) ? 0 : mapsIdTeamMember.hashCode() );
+        result = prime * result + ( (score == null) ? 0 : score.hashCode() );
+        result = prime * result + ( (teamMember == null) ? 0 : teamMember.hashCode() );
         return result;
     }
 
@@ -169,19 +169,19 @@ public class MapsIdPlayerStat implements Serializable
         if ( getClass() != obj.getClass() )
             return false;
         MapsIdPlayerStat other = ( MapsIdPlayerStat ) obj;
-        if ( mapsIdScore == null )
+        if ( score == null )
         {
-            if ( other.mapsIdScore != null )
+            if ( other.score != null )
                 return false;
         }
-        else if ( !mapsIdScore.equals( other.mapsIdScore ) )
+        else if ( !score.equals( other.score ) )
             return false;
-        if ( mapsIdTeamMember == null )
+        if ( teamMember == null )
         {
-            if ( other.mapsIdTeamMember != null )
+            if ( other.teamMember != null )
                 return false;
         }
-        else if ( !mapsIdTeamMember.equals( other.mapsIdTeamMember ) )
+        else if ( !teamMember.equals( other.teamMember ) )
             return false;
         return true;
     }

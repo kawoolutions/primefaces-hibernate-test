@@ -35,16 +35,16 @@ public class MapsIdScore implements Serializable
     @Id
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "game_id")
-    private MapsIdGame mapsIdGame;
+    private MapsIdGame game;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "roster_id")
-    private MapsIdRoster mapsIdRoster;
+    private MapsIdRoster roster;
 
-    @OneToMany(mappedBy = "mapsIdScore")
+    @OneToMany(mappedBy = "score")
     @MapKey(name = "jerseyNbr")
     @OrderBy("starter DESC, jerseyNbr")
-    private Map<Integer, MapsIdPlayerStat> mapsIdPlayerStats;
+    private Map<Integer, MapsIdPlayerStat> playerStats;
 
     public MapsIdScore()
     {
@@ -75,21 +75,21 @@ public class MapsIdScore implements Serializable
         this.home = Objects.requireNonNull(home);
         this.finalScore = finalScore;
 
-        this.mapsIdGame = new MapsIdGame();
-        this.mapsIdGame.setId(gameId);
+        this.game = new MapsIdGame();
+        this.game.setId(gameId);
 
-        this.mapsIdRoster = new MapsIdRoster();
-        this.mapsIdRoster.setId(rosterId);
+        this.roster = new MapsIdRoster();
+        this.roster.setId(rosterId);
     }
 
     public Integer getGameId()
     {
-        return mapsIdGame.getId();
+        return game.getId();
     }
 
     public void setGameId(Integer gameId)
     {
-        mapsIdGame.setId(gameId);
+        game.setId(gameId);
     }
 
     public Boolean getHome()
@@ -104,12 +104,12 @@ public class MapsIdScore implements Serializable
 
     public Integer getRosterId()
     {
-        return mapsIdRoster.getId();
+        return roster.getId();
     }
 
     public void setRosterId(Integer rosterId)
     {
-        mapsIdRoster.setId(rosterId);
+        roster.setId(rosterId);
     }
 
     public Integer getFinalScore()
@@ -122,34 +122,34 @@ public class MapsIdScore implements Serializable
         this.finalScore = finalScore;
     }
 
-    public MapsIdGame getMapsIdGame()
+    public MapsIdGame getGame()
     {
-        return mapsIdGame;
+        return game;
     }
 
-    public void setMapsIdGame(MapsIdGame mapsIdGame)
+    public void setGame(MapsIdGame game)
     {
-        this.mapsIdGame = mapsIdGame;
+        this.game = game;
     }
 
-    public MapsIdRoster getMapsIdRoster()
+    public MapsIdRoster getRoster()
     {
-        return mapsIdRoster;
+        return roster;
     }
 
-    public void setMapsIdRoster(MapsIdRoster mapsIdRoster)
+    public void setRoster(MapsIdRoster roster)
     {
-        this.mapsIdRoster = mapsIdRoster;
+        this.roster = roster;
     }
 
-    public Map<Integer, MapsIdPlayerStat> getMapsIdPlayerStats()
+    public Map<Integer, MapsIdPlayerStat> getPlayerStats()
     {
-        return mapsIdPlayerStats;
+        return playerStats;
     }
 
-    public void setMapsIdPlayerStats(Map<Integer, MapsIdPlayerStat> mapsIdPlayerStats)
+    public void setPlayerStats(Map<Integer, MapsIdPlayerStat> playerStats)
     {
-        this.mapsIdPlayerStats = mapsIdPlayerStats;
+        this.playerStats = playerStats;
     }
 
     @Override
@@ -157,8 +157,8 @@ public class MapsIdScore implements Serializable
     {
         final int prime = 31;
         int result = 1;
+        result = prime * result + ( (game == null) ? 0 : game.hashCode() );
         result = prime * result + ( (home == null) ? 0 : home.hashCode() );
-        result = prime * result + ( (mapsIdGame == null) ? 0 : mapsIdGame.hashCode() );
         return result;
     }
 
@@ -172,19 +172,19 @@ public class MapsIdScore implements Serializable
         if ( getClass() != obj.getClass() )
             return false;
         MapsIdScore other = ( MapsIdScore ) obj;
+        if ( game == null )
+        {
+            if ( other.game != null )
+                return false;
+        }
+        else if ( !game.equals( other.game ) )
+            return false;
         if ( home == null )
         {
             if ( other.home != null )
                 return false;
         }
         else if ( !home.equals( other.home ) )
-            return false;
-        if ( mapsIdGame == null )
-        {
-            if ( other.mapsIdGame != null )
-                return false;
-        }
-        else if ( !mapsIdGame.equals( other.mapsIdGame ) )
             return false;
         return true;
     }

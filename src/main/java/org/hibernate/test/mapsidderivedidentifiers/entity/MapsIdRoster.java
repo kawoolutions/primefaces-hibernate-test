@@ -31,14 +31,14 @@ public class MapsIdRoster implements Serializable
     @JoinColumn(name = "club_id", referencedColumnName = "club_id")
     @JoinColumn(name = "team_type_code", referencedColumnName = "team_type_code")
     @JoinColumn(name = "team_ordinal_nbr", referencedColumnName = "ordinal_nbr")
-    private MapsIdTeam mapsIdTeam;
+    private MapsIdTeam team;
 
-    @OneToMany(mappedBy = "mapsIdRoster")
-    private List<MapsIdScore> mapsIdScores;
+    @OneToMany(mappedBy = "roster")
+    private List<MapsIdScore> scores;
 
-    @OneToMany(mappedBy = "mapsIdRoster")
+    @OneToMany(mappedBy = "roster")
     @OrderBy
-    private List<MapsIdTeamMember> mapsIdTeamMembers;
+    private List<MapsIdTeamMember> teamMembers;
 
     public MapsIdRoster()
     {
@@ -53,7 +53,7 @@ public class MapsIdRoster implements Serializable
 
     public MapsIdRoster(Integer clubId, String teamTypeCode, Integer teamOrdinalNbr)
     {
-        this.mapsIdTeam = new MapsIdTeam(clubId, teamTypeCode, teamOrdinalNbr);
+        this.team = new MapsIdTeam(clubId, teamTypeCode, teamOrdinalNbr);
     }
 
     public Integer getId()
@@ -68,62 +68,62 @@ public class MapsIdRoster implements Serializable
 
     public Integer getClubId()
     {
-        return mapsIdTeam.getClubId();
+        return team.getClubId();
     }
 
     public void setClubId(Integer clubId)
     {
-        mapsIdTeam.setClubId(clubId);
+        team.setClubId(clubId);
     }
 
     public String getTeamTypeCode()
     {
-        return mapsIdTeam.getTeamTypeCode();
+        return team.getTeamTypeCode();
     }
 
     public void setTeamTypeCode(String teamTypeCode)
     {
-        mapsIdTeam.setTeamTypeCode(teamTypeCode);
+        team.setTeamTypeCode(teamTypeCode);
     }
 
     public Integer getTeamOrdinalNbr()
     {
-        return mapsIdTeam.getOrdinalNbr();
+        return team.getOrdinalNbr();
     }
 
     public void setTeamOrdinalNbr(Integer teamOrdinalNbr)
     {
-        mapsIdTeam.setOrdinalNbr(teamOrdinalNbr);
+        team.setOrdinalNbr(teamOrdinalNbr);
     }
 
-    public MapsIdTeam getMapsIdTeam()
+    public MapsIdTeam getTeam()
     {
-        return mapsIdTeam;
+        return team;
     }
 
-    public void setMapsIdTeam(MapsIdTeam mapsIdTeam)
+    public void setTeam(MapsIdTeam team)
     {
-        this.mapsIdTeam = mapsIdTeam;
+        this.team = team;
     }
 
-    public List<MapsIdScore> getMapsIdScores()
+    public List<MapsIdScore> getScores()
     {
-        return mapsIdScores;
+        return scores;
     }
 
-    public void setMapsIdScores(List<MapsIdScore> mapsIdScores)
+    public void setScores(List<MapsIdScore> scores)
     {
-        this.mapsIdScores = mapsIdScores;
+        this.scores = scores;
     }
 
-    public List<MapsIdTeamMember> getMapsIdTeamMembers()
+    public List<MapsIdTeamMember> getTeamMembers()
     {
-        return mapsIdTeamMembers;
+        return teamMembers;
     }
 
-    public void setMapsIdTeamMembers(List<MapsIdTeamMember> mapsIdTeamMembers)
+    public void setTeamMembers(List<MapsIdTeamMember> teamMembers)
     {
-        this.mapsIdTeamMembers = mapsIdTeamMembers;
+        this.teamMembers = teamMembers;
     }
 
     @Override
