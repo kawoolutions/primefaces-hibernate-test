@@ -57,15 +57,20 @@ public class NamingUtils
         return teamName;
     }
 
+    
+    
+    
+    
+    
     public static String getMapsIdGameLabelFor( MapsIdGame game )
     {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "yyyy-MM-dd HH:mm" );
         LocalDateTime scheduledTipoff = game.getScheduledTipoff();
         String isoDate = scheduledTipoff.format( formatter );
         
-        Map<Boolean, MapsIdScore> scores = game.getMapsIdScores();
+        Map<Boolean, MapsIdScore> scores = game.getScores();
         
-        String label = isoDate + ": " + getMapsIdTeamLabelForRoster( scores.get( Boolean.TRUE ).getMapsIdRoster() ) + " vs. " + getMapsIdTeamLabelForRoster( scores.get( Boolean.FALSE ).getMapsIdRoster() );
+        String label = isoDate + ": " + getMapsIdTeamLabelForRoster( scores.get( Boolean.TRUE ).getRoster() ) + " vs. " + getMapsIdTeamLabelForRoster( scores.get( Boolean.FALSE ).getRoster() );
         
         return label;
     }
@@ -77,7 +82,7 @@ public class NamingUtils
             return "Null EAGER roster!";
         }
         
-        return getTeamLabelFor( roster.getMapsIdTeam().getMapsIdClub().getName(), roster.getTeamOrdinalNbr() );
+        return getMapsIdTeamLabelFor( roster.getTeam().getClub().getName(), roster.getTeamOrdinalNbr() );
     }
     
     public static String getMapsIdTeamLabelFor( String clubName, Integer teamNumber )

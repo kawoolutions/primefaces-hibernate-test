@@ -19,13 +19,14 @@ import javax.persistence.Persistence;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.TypedQuery;
 
+import org.hibernate.test.mapsidderivedidentifiers.entity.MapsIdClub;
 import org.hibernate.test.mapsidderivedidentifiers.entity.MapsIdGame;
 import org.hibernate.test.mapsidderivedidentifiers.entity.MapsIdPlayer;
 import org.hibernate.test.mapsidderivedidentifiers.entity.MapsIdPlayerStat;
 import org.hibernate.test.mapsidderivedidentifiers.entity.MapsIdRoster;
 import org.hibernate.test.mapsidderivedidentifiers.entity.MapsIdScore;
+import org.hibernate.test.mapsidderivedidentifiers.entity.MapsIdTeam;
 import org.hibernate.test.mapsidderivedidentifiers.entity.MapsIdTeamMember;
-import org.hibernate.test.mapsidderivedidentifiers.simpleentity.Game;
 
 @Named
 @ApplicationScoped
@@ -107,17 +108,46 @@ public class MapsIdDerivedIdentifierManager implements Serializable
             
             players.forEach( p -> em.persist( p ) );
             
+            List<MapsIdClub> clubs = new ArrayList<MapsIdClub>();
+            clubs.add( new MapsIdClub( 1, "Dallas Mavericks" ) );
+            clubs.add( new MapsIdClub( 2, "Harlem Globetrotters" ) );
+            clubs.add( new MapsIdClub( 3, "Frankfurt Skyliners" ) );
+            clubs.add( new MapsIdClub( 4, "Chicago Bulls" ) );
+            clubs.add( new MapsIdClub( 5, "Boston Celtics" ) );
+            clubs.add( new MapsIdClub( 6, "New York Knicks" ) );
+            clubs.add( new MapsIdClub( 7, "Miami Heat" ) );
+            clubs.add( new MapsIdClub( 8, "Unicaya Malaga" ) );
+            
+            clubs.forEach( c -> em.persist( c ) );
+            
+            List<MapsIdTeam> teams = new ArrayList<MapsIdTeam>();
+            teams.add( new MapsIdTeam( 1, "MO20", 3 ) );
+            teams.add( new MapsIdTeam( 2, "MO20", 2 ) );
+            teams.add( new MapsIdTeam( 3, "MO20", 1 ) );
+            teams.add( new MapsIdTeam( 4, "MO20", 1 ) );
+            teams.add( new MapsIdTeam( 5, "MO20", 4 ) );
+            teams.add( new MapsIdTeam( 6, "MO20", 3 ) );
+            teams.add( new MapsIdTeam( 7, "MO20", 2 ) );
+            teams.add( new MapsIdTeam( 8, "MO20", 1 ) );
+            
+            teams.forEach( t -> em.persist( t ) );
+            
+            // overwrite club for each team with instances that have the name set
+            teams.forEach( t -> t.setClub( clubs.get( clubs.indexOf( t.getClub() ) ) ) );
+            
+            // roster ID is being generated
             List<MapsIdRoster> rosters = new ArrayList<MapsIdRoster>();
-            rosters.add( new MapsIdRoster( 1, "Dallas Mavericks", 3 ) );
-            rosters.add( new MapsIdRoster( 2, "Harlem Globetrotters", 2 ) );
-            rosters.add( new MapsIdRoster( 3, "Frankfurt Skyliners", 1 ) );
-            rosters.add( new MapsIdRoster( 4, "Chicago Bulls", 1 ) );
-            rosters.add( new MapsIdRoster( 5, "Boston Celtics", 4 ) );
-            rosters.add( new MapsIdRoster( 6, "New York Knicks", 3 ) );
-            rosters.add( new MapsIdRoster( 7, "Miami Heat", 2 ) );
-            rosters.add( new MapsIdRoster( 8, "Unicaya Malaga", 1 ) );
+            rosters.add( new MapsIdRoster( 1, "MO20", 3 ) );
+            rosters.add( new MapsIdRoster( 2, "MO20", 2 ) );
+            rosters.add( new MapsIdRoster( 3, "MO20", 1 ) );
+            rosters.add( new MapsIdRoster( 4, "MO20", 1 ) );
+            rosters.add( new MapsIdRoster( 5, "MO20", 4 ) );
+            rosters.add( new MapsIdRoster( 6, "MO20", 3 ) );
+            rosters.add( new MapsIdRoster( 7, "MO20", 2 ) );
+            rosters.add( new MapsIdRoster( 8, "MO20", 1 ) );
             
             rosters.forEach( r -> em.persist( r ) );
+            rosters.forEach( r -> r.setTeam( teams.get( teams.indexOf( r.getTeam() ) ) ) );
             
             MapsIdGame game01 = newGame( 1, rosters.get( 0 ), rosters.get( 1 ) );
             MapsIdGame game02 = newGame( 2, rosters.get( 2 ), rosters.get( 3 ) );
@@ -128,12 +158,12 @@ public class MapsIdDerivedIdentifierManager implements Serializable
             
             for ( MapsIdGame game : games )
             {
-                MapsIdScore homeScore = game.getMapsIdScores().get( Boolean.TRUE );
-                MapsIdScore awayScore = game.getMapsIdScores().get( Boolean.FALSE );
+                MapsIdScore homeScore = game.getScores().get( Boolean.TRUE );
+                MapsIdScore awayScore = game.getScores().get( Boolean.FALSE );
                 
                 System.out.println( "Game before persist: " + NamingUtils.getMapsIdGameLabelFor( game ) + ", home = " + homeScore + ", away = " + awayScore );
     
-                game.setMapsIdScores( null );
+                game.setScores( null );
     
                 em.persist( game );
                 
@@ -144,7 +174,7 @@ public class MapsIdDerivedIdentifierManager implements Serializable
                 scores.put( homeScore.getHome(), homeScore );
                 scores.put( awayScore.getHome(), awayScore );
                 
-                game.setMapsIdScores( scores );
+                game.setScores( scores );
                 
                 // add all player stats for home team
                 Map<Integer, MapsIdPlayerStat> homePlayerStats = new HashMap<>();
@@ -155,14 +185,14 @@ public class MapsIdDerivedIdentifierManager implements Serializable
                     MapsIdRoster roster = rosters.get( index );
                     
                     MapsIdTeamMember tm = new MapsIdTeamMember( player.getId(), roster.getId() );
-                    tm.setMapsIdPlayer( player );
-                    tm.setMapsIdRoster( roster );
+                    tm.setPlayer( player );
+                    tm.setRoster( roster );
                     
                     Integer jerseyNbr = index + 10;
                     
-                    MapsIdPlayerStat ps = new MapsIdPlayerStat( game.getId(), homeScore.getHome(), tm.getPlayerId(), jerseyNbr );
-                    ps.setMapsIdScore( homeScore );
-                    ps.setMapsIdTeamMember( tm );
+                    MapsIdPlayerStat ps = new MapsIdPlayerStat( game.getId(), homeScore.getHome(), tm.getPlayerId(), roster.getId(), jerseyNbr );
+                    ps.setScore( homeScore );
+                    ps.setTeamMember( tm );
                     
                     em.persist( ps );
                     
@@ -171,7 +201,7 @@ public class MapsIdDerivedIdentifierManager implements Serializable
                     index++;
                 }
                 
-                homeScore.setMapsIdPlayerStats( homePlayerStats );
+                homeScore.setPlayerStats( homePlayerStats );
 
                 // add all player stats for away team
                 Map<Integer, MapsIdPlayerStat> awayPlayerStats = new HashMap<>();
@@ -182,14 +212,14 @@ public class MapsIdDerivedIdentifierManager implements Serializable
                     MapsIdRoster roster = rosters.get( index );
                     
                     MapsIdTeamMember tm = new MapsIdTeamMember( player.getId(), roster.getId() );
-                    tm.setMapsIdPlayer( player );
-                    tm.setMapsIdRoster( rosters.get( index ) );
+                    tm.setPlayer( player );
+                    tm.setRoster( rosters.get( index ) );
                     
                     Integer jerseyNbr = index + 10;
                     
-                    MapsIdPlayerStat ps = new MapsIdPlayerStat( game.getId(), awayScore.getHome(), tm.getPlayerId(), jerseyNbr );
-                    ps.setMapsIdScore( awayScore );
-                    ps.setMapsIdTeamMember( tm );
+                    MapsIdPlayerStat ps = new MapsIdPlayerStat( game.getId(), awayScore.getHome(), tm.getPlayerId(), roster.getId(), jerseyNbr );
+                    ps.setScore( awayScore );
+                    ps.setTeamMember( tm );
                     
                     em.persist( ps );
                     
@@ -198,7 +228,7 @@ public class MapsIdDerivedIdentifierManager implements Serializable
                     index++;
                 }
                 
-                awayScore.setMapsIdPlayerStats( awayPlayerStats );
+                awayScore.setPlayerStats( awayPlayerStats );
 
                 System.out.println( "Game after persist: " + NamingUtils.getMapsIdGameLabelFor( game ) + ", home = " + homeScore + ", away = " + awayScore );
             }
@@ -218,18 +248,18 @@ public class MapsIdDerivedIdentifierManager implements Serializable
         wait( 500 );
         
         MapsIdScore homeScore = new MapsIdScore( game.getId(), Boolean.TRUE, homeRoster.getId(), null );
-        homeScore.setMapsIdRoster( homeRoster );
-        homeScore.setMapsIdGame( game );
+        homeScore.setRoster( homeRoster );
+        homeScore.setGame( game );
         
         MapsIdScore awayScore = new MapsIdScore( game.getId(), Boolean.FALSE, awayRoster.getId(), null );
-        awayScore.setMapsIdRoster( awayRoster );
-        awayScore.setMapsIdGame( game );
+        awayScore.setRoster( awayRoster );
+        awayScore.setGame( game );
         
         Map<Boolean, MapsIdScore> scores = new HashMap<>();
         scores.put( homeScore.getHome(), homeScore );
         scores.put( awayScore.getHome(), awayScore );
         
-        game.setMapsIdScores( scores );
+        game.setScores( scores );
 
         return game;
     }
@@ -272,8 +302,7 @@ public class MapsIdDerivedIdentifierManager implements Serializable
     {
         List<MapsIdGame> entities = null;
         
-        TypedQuery<MapsIdGame> query = em.createNamedQuery( Game.FIND_ALL, MapsIdGame.class );
-//        TypedQuery<MapsIdGame> query = em.createNamedQuery( Game.FIND_ALL_JOIN_SCORES_GROUP_BY_GAME_ID, Game.class );
+        TypedQuery<MapsIdGame> query = em.createNamedQuery( MapsIdGame.FIND_ALL, MapsIdGame.class );
         
         EntityGraph<?> graph = em.createEntityGraph( MapsIdGame.FETCH_SCORES );
 //        EntityGraph<?> graph = em.getEntityGraph( MapsIdGame.FETCH_SCORES_AND_PLAYER_STATS );
@@ -285,8 +314,8 @@ public class MapsIdDerivedIdentifierManager implements Serializable
 
         for ( MapsIdGame game : entities )
         {
-            MapsIdScore homeScore = game.getMapsIdScores().get( Boolean.TRUE );
-            MapsIdScore awayScore = game.getMapsIdScores().get( Boolean.FALSE );
+            MapsIdScore homeScore = game.getScores().get( Boolean.TRUE );
+            MapsIdScore awayScore = game.getScores().get( Boolean.FALSE );
             
             System.out.println( "Game after loading: " + NamingUtils.getMapsIdGameLabelFor( game ) + ", home = " + homeScore + ", away = " + awayScore );
         }
